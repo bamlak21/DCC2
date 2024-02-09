@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
 import avatar from "../assets/images/doctor-img01.png";
@@ -41,10 +42,10 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5173/api/v1/auth/register`, {
+      const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
         method: "post",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -149,7 +150,15 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center gap-3">
-
+                {selectedFile && (
+                  <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                    <img
+                      src={previewURL}
+                      alt=""
+                      className="w-full rounded-full"
+                    />
+                  </figure>
+                )}
 
                 <div className="relative w-[130px] h-[50px]">
                   <input
@@ -159,7 +168,6 @@ const Signup = () => {
                     id="customFile"
                     accept=".jpg, .png"
                     className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                    accept=".png, .jpg"
                   />
                   <label
                     htmlFor="customFile"
@@ -173,6 +181,15 @@ const Signup = () => {
 
               <div className="mt-7">
                 <button
+                  disabled={loading && true}
+                  type="submit"
+                  className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg  py-3"
+                >
+                  {loading ? (
+                    <HashLoader size={35} color="#ffffff" />
+                  ) : (
+                    "Sign Up"
+                  )}
                 </button>
               </div>
 
